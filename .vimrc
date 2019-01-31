@@ -14,17 +14,28 @@ if dein#load_state('~/.cache/dein')
 	endif
 	call dein#add('zchee/deoplete-go', {'build': 'make'})
 
+	call dein#add('ryanoasis/vim-devicons')
+	call dein#add('vim-airline/vim-airline')
+	call dein#add('vim-airline/vim-airline-themes')
+
+	" Tree 	
 	call dein#add('scrooloose/nerdtree')
-	call dein#add('fatih/vim-go')
+
+	" vim-go
+	call dein#add('fatih/vim-go', {'on_ft' : 'go'})
+	call dein#add('SirVer/ultisnips')
+	
 	call dein#add('Shougo/vimproc.vim')
 	call dein#add('vim-jp/vim-go-extra')
-	call dein#add('SirVer/ultisnips')
+	
 	call dein#add('tomtom/tcomment_vim')
 	call dein#add('Shougo/neosnippet-snippets')
 	call dein#add('Shougo/deoplete.nvim')
 	call dein#add('altercation/vim-colors-solarized')
 
- 	call dein#end()
+	call dein#add('tpope/vim-fugitive')
+ 	
+	call dein#end()
   call dein#save_state()
 endif
 
@@ -32,8 +43,6 @@ endif
 if dein#check_install()
   call dein#install()
 endif
-
-let g:deoplete#enable_at_startup = 1
 
 " setting
 if has("multi_lang")
@@ -84,9 +93,9 @@ nnoremap k gk
 " Tab文字を半角スペースにする
 " set expandtab
 " 行頭以外のTab文字の表示幅（スペースいくつ分）
-set tabstop=2
+set tabstop=4
 " 行頭でのTab文字の表示幅
-set shiftwidth=2
+set shiftwidth=4
 
 
 " 検索系
@@ -117,8 +126,10 @@ syntax enable
 let g:NERDTreeDirArrows = 1
 " ctrl-n で NERDTree を起動
 nnoremap <silent> <C-n> :NERDTreeToggle<CR>
+" ^Gを削除
 let g:NERDTreeNodeDelimiter = "\u00a0"
-
+" 隠しファイル表示
+let NERDTreeShowHidden=1
 
 " vim-go
 let g:go_fmt_command = "goimports"
@@ -139,3 +150,34 @@ elseif dein#tap('neocomplete.vim')
   let g:neocomplete#enable_at_startup = 1
 endif
 
+inoremap { {}<Left>
+inoremap {<Enter> {}<Left><CR><ESC><S-o>
+inoremap ( ()<ESC>i
+inoremap (<Enter> ()<Left><CR><ESC><S-o>
+inoremap [ []<LEFT>
+inoremap [<Enter> []<Left><CR><ESC><S-o>
+inoremap " ""<LEFT>
+inoremap ' ''<LEFT>
+
+" esc
+noremap <C-j> <esc>
+noremap! <C-j> <esc>
+
+
+" vim-airline
+let g:airline_theme = 'wombat'
+set laststatus=2
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#wordcount#enabled = 0
+let g:airline#extensions#default#layout = [['a', 'b', 'c'], ['x', 'y', 'z']]
+let g:airline_section_c = '%t'
+let g:airline_section_x = '%{&filetype}'
+let g:airline_section_z = '%3l:%2v %{airline#extensions#ale#get_warning()} %{airline#extensions#ale#get_error()}'
+let g:airline#extensions#ale#error_symbol = ' '
+let g:airline#extensions#ale#warning_symbol = ' '
+let g:airline#extensions#default#section_truncate_width = {}
+let g:airline#extensions#whitespace#enabled = 1
+
+set guifont=Ricty_Nerd_Font:h16
